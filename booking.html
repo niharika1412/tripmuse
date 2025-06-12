@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Travel Booking</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url('https://www.w3schools.com/w3images/mountains.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .booking-container {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px 40px;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 100%;
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+    }
+
+    input[type="submit"] {
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-weight: bold;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #218838;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    .success {
+      color: #00ff7f;
+    }
+
+    .error {
+      color: #ff6961;
+    }
+  </style>
+</head>
+<body>
+  <div class="booking-container">
+    <h1>Book Your Trip</h1>
+    <form id="bookingForm" method="POST" action="booking.php">
+      <div class="form-group">
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" required />
+      </div>
+
+      <div class="form-group">
+        <label for="destination">Destination:</label>
+        <select id="destination" required>
+          <option value="">Select a destination</option>
+          <option>Paris</option>
+          <option>New York</option>
+          <option>Sydeny</option>
+          <option>India</option>
+          <option>Italy</option>
+          <option>London</option>
+          <option>Maldives</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="date">Travel Date:</label>
+        <input type="date" id="date" required />
+      </div>
+
+      <div class="form-group">
+        <label for="travelers">Number of Travelers:</label>
+        <input type="number" id="travelers" min="1" value="1" required />
+      </div>
+
+      <input type="submit" value="Book Now" />
+      <div class="message" id="formMessage"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('bookingForm');
+    const message = document.getElementById('formMessage');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const fullName = document.getElementById('fullName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const destination = document.getElementById('destination').value;
+      const date = document.getElementById('date').value;
+      const travelers = document.getElementById('travelers').value;
+
+      message.textContent = '';
+      message.classList.remove('error', 'success');
+
+      if (!fullName || !email || !destination || !date || !travelers) {
+        message.textContent = 'Please fill in all fields.';
+        message.classList.add('error');
+        return;
+      }
+
+      if (!email.includes('@') || !email.includes('.')) {
+        message.textContent = 'Please enter a valid email.';
+        message.classList.add('error');
+        return;
+      }
+
+      message.textContent = `Booking confirmed for ${fullName} to ${destination} on ${date} with ${travelers} traveler(s)!`;
+      message.classList.add('success');
+
+      form.reset();
+    });
+  </script>
+</body>
+</html>
